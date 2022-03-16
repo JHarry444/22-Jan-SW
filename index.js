@@ -54,7 +54,7 @@ app.put("/replace/:id", (req, res) => {
     const newPerson = req.query;
     const id = Number.parseInt(req.params.id);
 
-    if (id == null || undefined || id === NaN) 
+    if (id === null || undefined || id === NaN) 
         return next({ status: 400, message: "Invalid id" });
     else if (id > data.length) 
         return next({ status: 404, message: "No person found with id " + id });
@@ -66,11 +66,11 @@ app.put("/replace/:id", (req, res) => {
 app.delete("/remove/:id", (req, res) => {
     const id = Number.parseInt(req.params.id);
 
-    if (id == null || undefined || id === NaN) 
+    if (id === null || undefined || id === NaN) 
         return next({ status: 400, message: "Invalid id" });
     else if (id > data.length) 
         return next({ status: 404, message: "No person found with id " + id });
-        
+
     data.splice(id, 1);
     res.sendStatus(204);
 });
