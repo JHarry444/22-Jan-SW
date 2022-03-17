@@ -8,8 +8,8 @@ const app = express();
 app.use(parser.json()); // every req we receive will first pass through this function and convert the body into json
 
 const cows = require("./cows");
+const personRoutes = require("./routes/personRoutes");
 
-const data = [];
 
 const bloop = (req, res, next) => {
     console.log("bloop");
@@ -31,49 +31,8 @@ app.get("/", (request, response) => {
     response.send(cows.speak("Mooooooo"));
 });
 
-app.get("/getAll", (req, res) => res.json(data));
+app.use("/person", personRoutes);
 
-app.get("/get/:id", (req, res, next) => {
-    const id = Number.parseInt(req.params.id);
-
-    if (id == null || undefined || id === NaN) 
-        return next({ status: 400, message: "Invalid id" });
-    else if (id > data.length) 
-        return next({ status: 404, message: "No person found with id " + id });
-    
-    res.json(data[id]);
-})
-
-app.post("/create", bloop, (req, res) => {
-    const person = req.body;
-    data.push(person);
-    res.status(201).send("Successfully created");
-});
-
-app.put("/replace/:id", (req, res) => {
-    const newPerson = req.query;
-    const id = Number.parseInt(req.params.id);
-
-    if (id === null || undefined || id === NaN) 
-        return next({ status: 400, message: "Invalid id" });
-    else if (id > data.length) 
-        return next({ status: 404, message: "No person found with id " + id });
-    
-    data.splice(id, 1, newPerson);
-    res.status(202).json(data[id]);
-});
-
-app.delete("/remove/:id", (req, res) => {
-    const id = Number.parseInt(req.params.id);
-
-    if (id === null || undefined || id === NaN) 
-        return next({ status: 400, message: "Invalid id" });
-    else if (id > data.length) 
-        return next({ status: 404, message: "No person found with id " + id });
-
-    data.splice(id, 1);
-    res.sendStatus(204);
-});
 
 app.use("*", (req, res, next) => {
     return next({status: 404, message: "Invalid URL"});
