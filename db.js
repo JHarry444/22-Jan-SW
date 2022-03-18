@@ -1,30 +1,31 @@
-const mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require('mongoose');
 
-mongoose.connect("mongodb://localhost:27017/Jan-SW", {
-    useNewUrlParser: true
+const { Schema } = mongoose;
+
+mongoose.connect('mongodb://localhost:27017/Jan-SW', {
+  useNewUrlParser: true,
 });
 
 const personSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        minlength: 2
-    },
-    age: {
-        type: Number,
-        required: true,
-        min: 0,
-        max: 110
-    },
-    jobTitle: {
-        type: String,
-        required: true,
-        minlength: 2
-    },
-    hobbies: {
-        type: [String]
-    }
+  name: {
+    type: String,
+    required: true,
+    minlength: 2,
+  },
+  age: {
+    type: Number,
+    required: true,
+    min: 0,
+    max: 110,
+  },
+  jobTitle: {
+    type: String,
+    required: true,
+    minlength: 2,
+  },
+  hobbies: {
+    type: [String],
+  },
 });
 
-module.exports = mongoose.model("Person", personSchema);
+module.exports = mongoose.model('Person', personSchema);

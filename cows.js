@@ -1,3 +1,3 @@
-const cow = require("cowsay"); // import
+const cow = require('cowsay'); // import
 
-module.exports.speak =  text => cow.say({text});
+module.exports.speak = (text) => cow.say({ text });
